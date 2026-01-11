@@ -1,0 +1,27 @@
+services:
+  app:
+    build:
+      context: .
+      target: final
+    environment:
+      - DB_URL=${DB_URL}
+    ports:
+      - "${APP_PORT_LOCAL}:8000"
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT_LOCAL}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  db-data:
