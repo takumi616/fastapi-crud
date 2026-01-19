@@ -7,6 +7,9 @@ class UserBase(BaseModel):
 class UserCreateRequest(UserBase):
     pass
 
+class UserUpdateRequest(UserBase):
+    pass
+
 class UserResponse(UserBase):
     id: uuid.UUID
 
